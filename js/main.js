@@ -1,36 +1,25 @@
 'use strict'
 
-const getRandomNumber = (min, max) => {
+const getRandomFloat = (min, max) => {
   min = Math.ceil(min);
   max = Math.floor(max);
-  return Math.random() * (max - min + 1) + min;
+  return Math.random() * (max - min) + min;
 };
 
 
-const getRandonCoordinates = (min, max, range = 1) => {
-  const value = getRandomNumber(min, max);
-
-  if (min >= max) {
-    throw new Error('Значение "от" не может быть меньше чем "до"')
-  }
-  else if (min < 0 || max < 0) {
-    throw new Error('Значения "от" и "до" не могут быть меньше нуля')
+const getRandonFixedFloat = (min, max, range = 1) => {
+  let errorMessage =  'Не корректное значение "от" или "до"';
+  if (min >= max || min < 0 || max < 0) {
+    throw new Error(errorMessage)
   }
 
+  const value = getRandomFloat(min, max);
   return value.toFixed(range);
 };
 
-getRandonCoordinates();
+const getRandomNumber = (min, max) => {
+  return getRandonFixedFloat(min, max, 0);
+};
 
-// Функция, возвращающая случайное число с плавающей точкой из переданного диапазона включительно.
-//  Будет использоваться для генерации временных географических координат в следующем задании.
 
-//  Пример использования функции:
-
-// имя_функции(от, до, количество_знаков_после_запятой); // Результат: число с плавающей точкой из диапазона "от...до"
-// с указанным "количеством знаков после запятой"
-
-// Учтите, что диапазон может быть только положительный, включая ноль. А также придумайте,
-// как функция должна вести себя, если передать значение «до» меньшее,
-// чем значение «от», или равное ему. Не забудьте, что в случае с дробными числами диапазон может быть в десятых,
-//  сотых, тысячных и т. д. долях. Например, 1.1, 1.2 — корректный диапазон.
+getRandomNumber();
