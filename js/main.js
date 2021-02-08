@@ -35,6 +35,15 @@ const TYPES = ['palace', 'flat', 'house', 'bungalow'];
 const CHECK_TIMES = ['12:00', '13:00', '14:00'];
 
 const OBJECT_COUNT = 10;
+const MAX_AVATAR = 8;
+const MAX_PRICE = 100;
+const MAX_ROOMS = 9;
+const MAX_QUESTS = 15;
+const MIN_X = 35.65000;
+const MAX_X = 35.70000;
+const MIN_Y = 139.70000;
+const MAX_Y = 139.80000;
+const FLOAT = 5;
 
 const getRandomBoolean = () => Boolean(getRandomNumber(0, 1));
 
@@ -47,19 +56,19 @@ const getRandomArrayItems = (array) => {
 };
 
 const createOffer = () => {
-  const avatar = `img/avatars/user0${getRandomNumber(1, 8)}.png`;
+  const avatar = `img/avatars/user0${getRandomNumber(1, MAX_AVATAR)}.png`;
 
   const title = 'Хижина в сказочном лесу';
 
-  const price = getRandomNumber(1, 100);
+  const price = getRandomNumber(1, MAX_PRICE );
   const type = getRandomArrayItem(TYPES);
-  const rooms = getRandomNumber(1, 9);
-  const guests = getRandomNumber(1, 9);
+  const rooms = getRandomNumber(1, MAX_ROOMS);
+  const guests = getRandomNumber(1, MAX_QUESTS);
 
   const description = 'Чистое-шелковистое помещение для крепкого сна';
 
-  const x = getRandomFixedFloat(35.65000, 35.70000, 5);
-  const y = getRandomFixedFloat(139.70000, 139.80000, 5);
+  const x = getRandomFixedFloat(MIN_X, MAX_X, FLOAT);
+  const y = getRandomFixedFloat(MIN_Y, MAX_Y, FLOAT);
   const address = `${x}, ${y}`;
 
   const features = getRandomArrayItems(FEATURES);
@@ -93,6 +102,17 @@ const createOffer = () => {
   }
 };
 
-const OFFERS = new Array(OBJECT_COUNT).fill('').map(() => createOffer());
-OFFERS; // что бы линтер не ругался
-//
+const generateObject = (count) => {
+  const OFFERS = new Array(count).fill('').map(() => createOffer())
+  return OFFERS;
+};
+generateObject(OBJECT_COUNT);
+
+// const generateArr = (count) => {         И ЧЕРЕЗ ЦИКЛ СДЕЛАЛА!!!
+//   const OFFERS = [];
+//   for (let i = 0; i < count; i++) {
+//     OFFERS[i] = createOffer();
+//   }
+//   return OFFERS;
+// };
+
