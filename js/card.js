@@ -4,7 +4,7 @@ const mapCanvas = document.querySelector('#map-canvas');
 const photoTemplate = cardTemplate.querySelector('.popup__photo');
 
 
-const TYPES_MAP = {
+export const TypesMap = {
   flat: 'Квартира',
   bungalow: 'Бунгало',
   house: 'Дом',
@@ -70,13 +70,13 @@ export const createCard = (offer) => {
   title ? popupTitle.textContent = title : cardElement.removeChild(popupTitle);
   address ? popupTextAddress.textContent = address : cardElement.removeChild(popupTextAddress);
   price ? popupTextPrice.textContent = `${price}₽/ночь` : cardElement.removeChild(popupTextPrice);
-  type ? popupType.textContent = TYPES_MAP[type] : cardElement.removeChild(popupType);
+  type ? popupType.textContent = TypesMap[type] : cardElement.removeChild(popupType);
   rooms && guests ? popupTextCapacity.textContent = `${rooms} комнаты для ${guests} гостей` : cardElement.removeChild(popupTextCapacity);
   checkin && checkout ? popupTextTime.textContent = `Заезд после ${checkin}, выезд до ${checkout}` : cardElement.removeChild(popupTextTime);
   description ? popupDescription.textContent = description : cardElement.removeChild(popupDescription);
 
-  features.length > 0 ? createFeaturesElement(popupFeatures, features) : cardElement.removeChild(popupFeatures);
-  photos.length > 0 ? fillPhotosElement(popupPhotos, photos) : cardElement.removeChild(popupPhotos);
+  features.length ? createFeaturesElement(popupFeatures, features) : cardElement.removeChild(popupFeatures);
+  photos.length ? fillPhotosElement(popupPhotos, photos) : cardElement.removeChild(popupPhotos);
 
 
   return cardElement;
