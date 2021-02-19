@@ -4,7 +4,7 @@ const mapCanvas = document.querySelector('#map-canvas');
 const photoTemplate = cardTemplate.querySelector('.popup__photo');
 
 
-export const TypesMap = {
+const TypesMap = {
   flat: 'Квартира',
   bungalow: 'Бунгало',
   house: 'Дом',
