@@ -1,12 +1,16 @@
 import { createOffers }  from './data.js';
-import { createCards, renderCard } from './card.js';
-import { addFormHandlers } from './form.js'
+import { addFormHandlers, initializeForm } from './form.js';
+import { renderMarkers, addMainPinHandlers, initializeMap } from './map.js';
+import './map.js';
 
-const OFFERS_COUNT = 10;
+export const OFFERS_COUNT = 10;
+
 const offers = createOffers(OFFERS_COUNT);
 
-const cardElements = createCards(offers);
-renderCard(cardElements[0]);
+initializeForm();
+
+renderMarkers(offers);
+initializeMap();
+addMainPinHandlers();
 
 addFormHandlers();
-
