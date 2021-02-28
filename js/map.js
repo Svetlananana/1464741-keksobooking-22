@@ -1,31 +1,14 @@
 /* global L:readonly */
 
-import {  setAdressValue } from './form.js';
-import { createCard }  from './card.js';
-import { enablePage, disablePage  } from './page.js';
+import { setAdressValue } from './form.js';
+import { createCard } from './card.js';
 
 export const TOKIO_COORDINATES_LAT = 35.6623;
 export const TOKIO_COORDINATES_LNG = 139.78053;
 
 const mapCanvas = document.querySelector('#map-canvas');
 
-disablePage();
-
-const map = L.map('map-canvas')
-  .on('load', () => {
-    enablePage()
-  })
-  .setView({
-    lat: TOKIO_COORDINATES_LAT,
-    lng: TOKIO_COORDINATES_LNG,
-  }, 13);
-
-L.tileLayer(
-  'https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',
-  {
-    attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors',
-  },
-).addTo(map);
+let map;
 
 const mainPinIcon = L.icon(
   {
@@ -45,8 +28,6 @@ const mainPinMarker = L.marker(
     icon: mainPinIcon,
   },
 );
-mainPinMarker.addTo(map);
-
 
 export const renderMarkers = (offers) => {
   offers.forEach((offer) => {
@@ -57,13 +38,14 @@ export const renderMarkers = (offers) => {
       iconAnchor: [13, 38],
     });
 
-    const marker = L.marker({
-      lat: offer.location.x,
-      lng: offer.location.y,
-    },
-    {
-      icon,
-    },
+    const marker = L.marker(
+      {
+        lat: offer.location.x,
+        lng: offer.location.y,
+      },
+      {
+        icon,
+      } ,
     );
 
     marker
@@ -83,12 +65,31 @@ const onMainPinMove = () => {
 };
 
 export const addMainPinHandlers = () => {
-  mainPinMarker.on('movestart', onMainPinMove);
+  mainPinMarker.on('drag', onMainPinMove);
   mainPinMarker.on('moveend', onMainPinMove);
 };
 
+export const initializeMap = (onLoad) => {
+  map = L.map('map-canvas')
+    .on('load', () => {
+      onLoad()
+    })
+    .setView({
+      lat: TOKIO_COORDINATES_LAT,
+      lng: TOKIO_COORDINATES_LNG,
+    }, 13);
 
-export const initializeMap = () => {
+  L.tileLayer(
+    'https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',
+    {
+      attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors',
+    },
+  ).addTo(map);
+
+  mainPinMarker.addTo(map);
+
   mapCanvas.setAttribute('height', '480');
   setAdressValue(TOKIO_COORDINATES_LAT, TOKIO_COORDINATES_LNG);
+
+  addMainPinHandlers();
 };
