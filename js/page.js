@@ -1,12 +1,12 @@
-import { disableFilterMapForm, enableFilterMapForm } from './filter.js';
+import { disableFilter, enableFilter } from './filter.js';
 import { enableForm, disableForm } from './form.js';
 
 export const enablePage = () => {
   enableForm();
-  enableFilterMapForm();
+  enableFilter();
 };
 
 export const disablePage = () => {
   disableForm();
-  disableFilterMapForm();
+  disableFilter();
 };

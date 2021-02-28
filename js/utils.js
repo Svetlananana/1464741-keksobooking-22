@@ -33,5 +33,3 @@ export const getRandomArrayItem = (array) => {
 export const getRandomArrayItems = (array) => {
   return array.filter(getRandomBoolean);
 };
-
-
