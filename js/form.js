@@ -8,6 +8,9 @@ const timeinSelectElement = adForm.querySelector('#timein');
 const timeoutSelectElement = adForm.querySelector('#timeout');
 const addressInputElement = adForm.querySelector('#address');
 
+const formChildrenElements = adForm.children;
+const formElements = Array.from(formChildrenElements);
+
 const TypesMinPriceMap = {
   'bungalow': 0,
   'flat': 1000,
@@ -35,22 +38,19 @@ export const addFormHandlers = () => {
 
 export const initializeForm = () => {
   addressInputElement.setAttribute('readonly', true);
-}; // main
-
-const formChildrenElements = adForm.children;
-const formElements = Array.from(formChildrenElements);
+};
 
 export const disableForm = () => {
   adForm.classList.add('ad-form--disabled');
   formElements.forEach((children) => {
-    children.setAttribute.disabled = true;
+    children.disabled = true;
   })
 };
 
 export const enableForm = () => {
   adForm.classList.remove('ad-form--disabled');
   formElements.forEach((children) => {
-    children.removeAttribute.disabled = false;
+    children.disabled = false;
   })
 };
 

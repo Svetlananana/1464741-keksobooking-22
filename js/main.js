@@ -1,16 +1,20 @@
-import { createOffers }  from './data.js';
+import { createOffers } from './data.js';
 import { addFormHandlers, initializeForm } from './form.js';
-import { renderMarkers, addMainPinHandlers, initializeMap } from './map.js';
-import './map.js';
+import { renderMarkers, initializeMap } from './map.js';
+import { disablePage, enablePage } from './page.js';
 
-export const OFFERS_COUNT = 10;
+const OFFERS_COUNT = 10;
 
 const offers = createOffers(OFFERS_COUNT);
 
+disablePage();
+
 initializeForm();
 
+initializeMap(() => {
+  enablePage();
+});
+
 renderMarkers(offers);
-initializeMap();
-addMainPinHandlers();
 
 addFormHandlers();
