@@ -1,12 +1,20 @@
-import { createOffers }  from './data.js';
-import { createCards, renderCard } from './card.js';
-import { addFormHandlers } from './form.js'
+import { createOffers } from './data.js';
+import { addFormHandlers, initializeForm } from './form.js';
+import { renderMarkers, initializeMap } from './map.js';
+import { disablePage, enablePage } from './page.js';
 
 const OFFERS_COUNT = 10;
+
 const offers = createOffers(OFFERS_COUNT);
 
-const cardElements = createCards(offers);
-renderCard(cardElements[0]);
+disablePage();
+
+initializeForm();
+
+initializeMap(() => {
+  enablePage();
+});
+
+renderMarkers(offers);
 
 addFormHandlers();
-

@@ -19,7 +19,7 @@ const MIN_X = 35.65000;
 const MAX_X = 35.70000;
 const MIN_Y = 139.70000;
 const MAX_Y = 139.80000;
-const FLOAT = 5;
+export const FLOAT = 5;
 
 
 const createOffer = () => {

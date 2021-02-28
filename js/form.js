@@ -1,9 +1,15 @@
+import { FLOAT }  from './data.js';
+
 const adForm = document.querySelector('.ad-form');
 const typeSelectElement = adForm.querySelector('#type');
 const priceInputElement = adForm.querySelector('#price');
 const adFormElementTime = adForm.querySelector('.ad-form__element--time');
 const timeinSelectElement = adForm.querySelector('#timein');
 const timeoutSelectElement = adForm.querySelector('#timeout');
+const addressInputElement = adForm.querySelector('#address');
+
+const formChildrenElements = adForm.children;
+const formElements = Array.from(formChildrenElements);
 
 const TypesMinPriceMap = {
   'bungalow': 0,
@@ -30,3 +36,24 @@ export const addFormHandlers = () => {
   adFormElementTime.addEventListener('change', onTimeCheckSelectElementChange);
 };
 
+export const initializeForm = () => {
+  addressInputElement.setAttribute('readonly', true);
+};
+
+export const disableForm = () => {
+  adForm.classList.add('ad-form--disabled');
+  formElements.forEach((children) => {
+    children.disabled = true;
+  })
+};
+
+export const enableForm = () => {
+  adForm.classList.remove('ad-form--disabled');
+  formElements.forEach((children) => {
+    children.disabled = false;
+  })
+};
+
+export const setAdressValue = (lat, lng) => {
+  addressInputElement.value = `${lat.toFixed(FLOAT)}, ${lng.toFixed(FLOAT)}`;
+};
