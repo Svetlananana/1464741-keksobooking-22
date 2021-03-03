@@ -1,5 +1,8 @@
 import { FLOAT }  from './data.js';
 
+const ROOMS_COUNT = '100';
+const CAPACITY_COUNT = '0';
+
 const adForm = document.querySelector('.ad-form');
 const typeSelectElement = adForm.querySelector('#type');
 const priceInputElement = adForm.querySelector('#price');
@@ -7,6 +10,8 @@ const adFormElementTime = adForm.querySelector('.ad-form__element--time');
 const timeinSelectElement = adForm.querySelector('#timein');
 const timeoutSelectElement = adForm.querySelector('#timeout');
 const addressInputElement = adForm.querySelector('#address');
+const roomNumberSelectElement = adForm.querySelector('#room_number');
+const capacitySelectElement = adForm.querySelector('#capacity');
 
 const formChildrenElements = adForm.children;
 const formElements = Array.from(formChildrenElements);
@@ -18,7 +23,29 @@ const TypesMinPriceMap = {
   'palace': 10000,
 };
 
-const onTypeSelectElementChange= () => {
+const setCapacityValue = () => {
+  capacitySelectElement.value = roomNumberSelectElement.value;
+};
+
+const onRoomNumberSelectElementChange = () => {
+  const roomsCount = roomNumberSelectElement.value;
+  const capacityCount = capacitySelectElement.value;
+
+  if (roomsCount < capacityCount) {
+    capacitySelectElement.setCustomValidity('Для такого количества гостей выбери больше комнат');
+  }
+  else if (roomsCount === ROOMS_COUNT && capacityCount !== CAPACITY_COUNT) {
+    capacitySelectElement.setCustomValidity(`Для '${ROOMS_COUNT} комнат' выбери значение 'не для гостей'`);
+  }
+  else if (capacityCount === CAPACITY_COUNT && roomsCount !== ROOMS_COUNT) {
+    capacitySelectElement.setCustomValidity(`Значение 'не для гостей' соответствует значению '${ROOMS_COUNT} комнат'`);
+  } else {
+    capacitySelectElement.setCustomValidity('');
+  }
+  capacitySelectElement.reportValidity();
+};
+
+const onTypeSelectElementChange = () => {
   const minPrice = TypesMinPriceMap[typeSelectElement.value];
 
   priceInputElement.min = minPrice;
@@ -34,10 +61,14 @@ export const addFormHandlers = () => {
   onTypeSelectElementChange();
   typeSelectElement.addEventListener('change', onTypeSelectElementChange);
   adFormElementTime.addEventListener('change', onTimeCheckSelectElementChange);
+
+  setCapacityValue();
+  roomNumberSelectElement.addEventListener('change', onRoomNumberSelectElementChange);
+  capacitySelectElement.addEventListener('change', onRoomNumberSelectElementChange);
 };
 
 export const initializeForm = () => {
-  addressInputElement.setAttribute('readonly', true);
+  addressInputElement.readOnly = true;
 };
 
 export const disableForm = () => {
@@ -57,3 +88,4 @@ export const enableForm = () => {
 export const setAdressValue = (lat, lng) => {
   addressInputElement.value = `${lat.toFixed(FLOAT)}, ${lng.toFixed(FLOAT)}`;
 };
+//
