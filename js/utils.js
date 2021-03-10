@@ -33,3 +33,8 @@ export const getRandomArrayItem = (array) => {
 export const getRandomArrayItems = (array) => {
   return array.filter(getRandomBoolean);
 };
+
+export const isMainButton = (evt) => evt.button === 0;
+export const isEscapeKey = (evt) => evt.key === 'Escape';
+
+//
