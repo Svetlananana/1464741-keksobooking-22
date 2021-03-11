@@ -90,7 +90,7 @@ export const createCards = (offers) => {
   });
   return cardElements;
 
-//  return offers.map((offer) => createCard(offer)); пусть пока останется плз
+//  return offers.map((offer) => createCard(offer)); // пусть пока останется плз
 };
 
 export const renderCard = (cardElement) => {

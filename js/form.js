@@ -1,4 +1,5 @@
 import { FLOAT }  from './data.js';
+import { sendOffer } from './backend.js';
 
 const ROOMS_COUNT = '100';
 const CAPACITY_COUNT = '0';
@@ -23,7 +24,7 @@ const TypesMinPriceMap = {
   'palace': 10000,
 };
 
-const setCapacityValue = () => {
+export const setCapacityValue = () => {
   capacitySelectElement.value = roomNumberSelectElement.value;
 };
 
@@ -31,14 +32,14 @@ const onRoomNumberSelectElementChange = () => {
   const roomsCount = roomNumberSelectElement.value;
   const capacityCount = capacitySelectElement.value;
 
-  if (roomsCount < capacityCount) {
-    capacitySelectElement.setCustomValidity('Для такого количества гостей выбери больше комнат');
+  if (roomsCount !== ROOMS_COUNT && capacityCount === CAPACITY_COUNT) {
+    capacitySelectElement.setCustomValidity(`Значение 'не для гостей' соответствует значению '${ROOMS_COUNT} комнат'.`);
   }
   else if (roomsCount === ROOMS_COUNT && capacityCount !== CAPACITY_COUNT) {
-    capacitySelectElement.setCustomValidity(`Для '${ROOMS_COUNT} комнат' выбери значение 'не для гостей'`);
+    capacitySelectElement.setCustomValidity(`Для '${ROOMS_COUNT} комнат' выбери значение 'не для гостей'.`);
   }
-  else if (capacityCount === CAPACITY_COUNT && roomsCount !== ROOMS_COUNT) {
-    capacitySelectElement.setCustomValidity(`Значение 'не для гостей' соответствует значению '${ROOMS_COUNT} комнат'`);
+  else if (roomsCount < capacityCount ) {
+    capacitySelectElement.setCustomValidity(' Для такого количества гостей выбери больше комнат.');
   } else {
     capacitySelectElement.setCustomValidity('');
   }
@@ -57,7 +58,7 @@ const onTimeCheckSelectElementChange = (elem) => {
   timeoutSelectElement.value = elem.target.value;
 };
 
-export const addFormHandlers = () => {
+const addFormHandlers = () => {
   onTypeSelectElementChange();
   typeSelectElement.addEventListener('change', onTypeSelectElementChange);
   adFormElementTime.addEventListener('change', onTimeCheckSelectElementChange);
@@ -69,6 +70,7 @@ export const addFormHandlers = () => {
 
 export const initializeForm = () => {
   addressInputElement.readOnly = true;
+  addFormHandlers();
 };
 
 export const disableForm = () => {
@@ -88,4 +90,24 @@ export const enableForm = () => {
 export const setAdressValue = (lat, lng) => {
   addressInputElement.value = `${lat.toFixed(FLOAT)}, ${lng.toFixed(FLOAT)}`;
 };
-//
+
+
+export const resetForm = () => {
+  adForm.reset();
+  document.querySelector('.map__filters').reset();
+};
+
+export const addSubmitHandler = (callback) => {
+  const onFormSubmit = (evt) => {
+    evt.preventDefault();
+
+    if (adForm.reportValidity()) {
+      const formData = new FormData(evt.target);
+      sendOffer(formData, callback)
+    }
+  };
+
+  adForm.addEventListener('submit', (event) => {
+    onFormSubmit(event);
+  });
+};
