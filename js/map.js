@@ -31,7 +31,6 @@ const mainPinMarker = L.marker(
 
 export const renderMarkers = (offers) => {
   offers.forEach((offer) => {
-
     const icon = L.icon({
       iconUrl: './leaflet/images/marker-icon.png',
       iconSize: [26, 38],
@@ -40,12 +39,12 @@ export const renderMarkers = (offers) => {
 
     const marker = L.marker(
       {
-        lat: offer.location.x,
-        lng: offer.location.y,
+        lat: offer.location.lat,
+        lng: offer.location.lng,
       },
       {
         icon,
-      } ,
+      },
     );
 
     marker
@@ -70,10 +69,13 @@ export const addMainPinHandlers = () => {
 };
 
 export const initializeMap = (onLoad) => {
-  map = L.map('map-canvas')
-    .on('load', () => {
-      onLoad()
-    })
+  if (!map) {
+    map = L.map('map-canvas');
+  }
+
+  map.on('load', () => {
+    onLoad()
+  })
     .setView({
       lat: TOKIO_COORDINATES_LAT,
       lng: TOKIO_COORDINATES_LNG,
@@ -86,6 +88,9 @@ export const initializeMap = (onLoad) => {
     },
   ).addTo(map);
 
+  const initialCoords = L.latLng(TOKIO_COORDINATES_LAT, TOKIO_COORDINATES_LNG);
+
+  mainPinMarker.setLatLng(initialCoords);
   mainPinMarker.addTo(map);
 
   mapCanvas.setAttribute('height', '480');

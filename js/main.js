@@ -1,20 +1,26 @@
-import { createOffers } from './data.js';
-import { addFormHandlers, initializeForm } from './form.js';
+import { initializeForm, addSubmitHandler, resetForm, setCapacityValue } from './form.js';
 import { renderMarkers, initializeMap } from './map.js';
 import { disablePage, enablePage } from './page.js';
+import { getOffers } from './backend.js';
 
-const OFFERS_COUNT = 10;
 
-const offers = createOffers(OFFERS_COUNT);
+getOffers()
+  .then((offers) => {
+    disablePage();
 
-disablePage();
+    initializeForm();
 
-initializeForm();
+    initializeMap(() => {
+      enablePage();
+    });
 
-initializeMap(() => {
-  enablePage();
-});
+    renderMarkers(offers);
 
-renderMarkers(offers);
+    addSubmitHandler(() => {
+      resetForm();
+      initializeMap();
+      setCapacityValue();
+    });
+  });
 
-addFormHandlers();
+
