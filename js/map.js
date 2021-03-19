@@ -29,7 +29,12 @@ const mainPinMarker = L.marker(
   },
 );
 
+let markers = [];
+
 export const renderMarkers = (offers) => {
+  markers.forEach((marker) => marker.remove());
+  markers = [];
+
   offers.forEach((offer) => {
     const icon = L.icon({
       iconUrl: './leaflet/images/marker-icon.png',
@@ -46,6 +51,8 @@ export const renderMarkers = (offers) => {
         icon,
       },
     );
+
+    markers.push(marker);
 
     marker
       .addTo(map)

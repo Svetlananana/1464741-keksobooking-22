@@ -1,4 +1,4 @@
-import { onSuccessMessage, onErrorMessage } from './success.js';
+import { showSuccess, showError } from './massage.js';
 export const BASE_URL = 'https://22.javascript.pages.academy/keksobooking';
 
 export const getOffers = () => {
@@ -9,7 +9,7 @@ export const getOffers = () => {
       }
       throw new Error ();
     })
-    .catch(() => onErrorMessage('Не удалось загрузить объявление'))
+    .catch(() => showError('Не удалось загрузить объявление'))
 };
 
 export const sendOffer = (data, onSuccess) => {
@@ -21,13 +21,13 @@ export const sendOffer = (data, onSuccess) => {
   )
     .then ((response) => {
       if (response.ok) {
-        return onSuccessMessage()
+        return showSuccess()
       }
       throw new Error();
     })
     .then(() => {
       onSuccess();
     })
-    .catch(() => onErrorMessage('Упс.. Ошибочка вышла!'));
-}
+    .catch(() => showError('Упс.. Ошибочка вышла! Форма заполнена не верно'));
+};
 

@@ -3,6 +3,7 @@ import { sendOffer } from './backend.js';
 
 const ROOMS_COUNT = '100';
 const CAPACITY_COUNT = '0';
+const FILE_TYPES = ['gif', 'jpg', 'jpeg', 'png'];
 
 const adForm = document.querySelector('.ad-form');
 const typeSelectElement = adForm.querySelector('#type');
@@ -13,9 +14,17 @@ const timeoutSelectElement = adForm.querySelector('#timeout');
 const addressInputElement = adForm.querySelector('#address');
 const roomNumberSelectElement = adForm.querySelector('#room_number');
 const capacitySelectElement = adForm.querySelector('#capacity');
+const resetBotton = adForm.querySelector('.ad-form__reset');
 
-const formChildrenElements = adForm.children;
-const formElements = Array.from(formChildrenElements);
+const adFieldAvatar = adForm.querySelector('.ad-form__field input[type=file]');
+const adPreview = adForm.querySelector('.ad-form-header__preview img');
+
+const adUpload = adForm.querySelector('.ad-form__upload input[type=file]');
+const adPhoto = adForm.querySelector('.ad-form__photo');
+
+const defaultAvatarImg = adPreview.src;
+
+const formElements = Array.from(adForm.children);
 
 const TypesMinPriceMap = {
   'bungalow': 0,
@@ -68,11 +77,6 @@ const addFormHandlers = () => {
   capacitySelectElement.addEventListener('change', onRoomNumberSelectElementChange);
 };
 
-export const initializeForm = () => {
-  addressInputElement.readOnly = true;
-  addFormHandlers();
-};
-
 export const disableForm = () => {
   adForm.classList.add('ad-form--disabled');
   formElements.forEach((children) => {
@@ -91,10 +95,18 @@ export const setAdressValue = (lat, lng) => {
   addressInputElement.value = `${lat.toFixed(FLOAT)}, ${lng.toFixed(FLOAT)}`;
 };
 
+const resetAvatarImg = () => {
+  adPreview.src = defaultAvatarImg;
+};
+
+const resetFileImage = () => {
+  adPhoto.innerHTML = '';
+};
 
 export const resetForm = () => {
   adForm.reset();
-  document.querySelector('.map__filters').reset();
+  resetAvatarImg();
+  resetFileImage();
 };
 
 export const addSubmitHandler = (callback) => {
@@ -110,4 +122,58 @@ export const addSubmitHandler = (callback) => {
   adForm.addEventListener('submit', (event) => {
     onFormSubmit(event);
   });
+
 };
+
+export const addResetHandler = (callback) => {
+  const onFormReset = (evt) => {
+    evt.preventDefault();
+    callback();
+  };
+
+  resetBotton.addEventListener('click', onFormReset);
+};
+
+
+const onAvatarChange = (reader) => {
+  adPreview.src = reader.result;
+};
+
+const onPhotoChange = (reader) => {
+  resetFileImage(adPhoto);
+  const imgElement = document.createElement('img');
+  imgElement.alt = 'Фотография жилья';
+  imgElement.style.maxWidth = '100%';
+
+  imgElement.src = reader.result;
+
+  adPhoto.append(imgElement);
+};
+
+const initializeReader = (element, fileTypes, onLoaded) => {
+  element.addEventListener('change', () => {
+    const file = element.files[0];
+    const fileName = file.name.toLowerCase();
+
+    const matches = fileTypes.some((it) => {
+      return fileName.endsWith(it);
+    })
+
+    if (matches) {
+      const reader = new FileReader();
+
+      reader.addEventListener('load', () => onLoaded(reader));
+
+      reader.readAsDataURL(file);
+    }
+  });
+};
+
+export const initializeForm = () => {
+  addressInputElement.readOnly = true;
+  addFormHandlers();
+
+  initializeReader(adFieldAvatar, FILE_TYPES, onAvatarChange);
+  initializeReader(adUpload, FILE_TYPES, onPhotoChange);
+};
+
