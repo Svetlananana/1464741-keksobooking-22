@@ -3,7 +3,6 @@ const cardTemplate = document.querySelector('#card').content.querySelector('.pop
 const mapCanvas = document.querySelector('#map-canvas');
 const photoTemplate = cardTemplate.querySelector('.popup__photo');
 
-
 const TypesMap = {
   flat: 'Квартира',
   bungalow: 'Бунгало',

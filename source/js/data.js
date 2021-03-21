@@ -5,11 +5,6 @@ import {
   getRandomArrayItems
 } from './utils.js';
 
-const FEATURES = ['wifi', 'dishwasher', 'parking', 'washer', 'elevator', 'conditioner'];
-const PHOTOS = ['http://o0.github.io/assets/images/tokyo/hotel1.jpg', 'http://o0.github.io/assets/images/tokyo/hotel2.jpg', 'http://o0.github.io/assets/images/tokyo/hotel3.jpg'];
-const TYPES = ['palace', 'flat', 'house', 'bungalow'];
-const CHECK_TIMES = ['12:00', '13:00', '14:00'];
-
 const MIN_VALUE = 1;
 const MAX_AVATAR = 8;
 const MAX_PRICE = 100;
@@ -21,6 +16,10 @@ const MIN_Y = 139.70000;
 const MAX_Y = 139.80000;
 export const FLOAT = 5;
 
+const FEATURES = ['wifi', 'dishwasher', 'parking', 'washer', 'elevator', 'conditioner'];
+const PHOTOS = ['http://o0.github.io/assets/images/tokyo/hotel1.jpg', 'http://o0.github.io/assets/images/tokyo/hotel2.jpg', 'http://o0.github.io/assets/images/tokyo/hotel3.jpg'];
+const TYPES = ['palace', 'flat', 'house', 'bungalow'];
+const CHECK_TIMES = ['12:00', '13:00', '14:00'];
 
 const createOffer = () => {
 

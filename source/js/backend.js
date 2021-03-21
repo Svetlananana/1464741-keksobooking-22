@@ -1,4 +1,5 @@
-import { showSuccess, showError } from './massage.js';
+import { showSuccess, showError } from './message.js';
+
 export const BASE_URL = 'https://22.javascript.pages.academy/keksobooking';
 
 export const getOffers = () => {
