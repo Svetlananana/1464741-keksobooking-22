@@ -1,15 +1,6 @@
 const MAX_CARDS_COUNT = 10;
 const ANY_VALUE = 'any';
 
-const filtersForm = document.querySelector('.map__filters');
-const filtersElements = Array.from(filtersForm.children);
-
-const filterType = filtersForm.querySelector('#housing-type');
-const filterPrice = filtersForm.querySelector('#housing-price');
-const filterRooms = filtersForm.querySelector('#housing-rooms');
-const filterGuests = filtersForm.querySelector('#housing-guests');
-const filterFeatures = filtersForm.querySelectorAll('.map__checkbox');
-
 const PriceRange = {
   LOW: 10000,
   HIGH: 50000,
@@ -20,6 +11,15 @@ const PriceValue = {
   LOW: 'low',
   HIGH: 'high',
 };
+
+const filtersForm = document.querySelector('.map__filters');
+const filtersElements = Array.from(filtersForm.children);
+
+const filterType = filtersForm.querySelector('#housing-type');
+const filterPrice = filtersForm.querySelector('#housing-price');
+const filterRooms = filtersForm.querySelector('#housing-rooms');
+const filterGuests = filtersForm.querySelector('#housing-guests');
+const filterFeatures = filtersForm.querySelectorAll('.map__checkbox');
 
 export const disableFilter = () => {
   filtersForm.classList.add('ad-form--disabled');
