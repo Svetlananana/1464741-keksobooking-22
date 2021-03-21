@@ -1,4 +1,4 @@
-/* global _:readonly */
+import debounce from 'lodash/debounce';
 
 import { initializeForm, addSubmitHandler, resetForm, setCapacityValue, addResetHandler } from './form.js';
 import { renderMarkers, initializeMap } from './map.js';
@@ -35,7 +35,7 @@ getOffers()
     });
 
     addFilterHandler(
-      _.debounce(renderMarkers, DEBOUNCE_TIME),
+      debounce(renderMarkers, DEBOUNCE_TIME),
       offers,
     );
   });
