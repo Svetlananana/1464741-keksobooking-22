@@ -1,14 +1,13 @@
-
-const cardTemplate = document.querySelector('#card').content.querySelector('.popup');
-const mapCanvas = document.querySelector('#map-canvas');
-const photoTemplate = cardTemplate.querySelector('.popup__photo');
-
 const TypesMap = {
   flat: 'Квартира',
   bungalow: 'Бунгало',
   house: 'Дом',
   palace: 'Дворец',
-}
+};
+
+const cardTemplate = document.querySelector('#card').content.querySelector('.popup');
+const mapCanvas = document.querySelector('#map-canvas');
+const photoTemplate = cardTemplate.querySelector('.popup__photo');
 
 const createFeaturesElement = (element, features) => {
   const fragment = document.createDocumentFragment();
