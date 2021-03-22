@@ -29,5 +29,5 @@ export const sendOffer = (data, onSuccess) => {
     .then(() => {
       onSuccess();
     })
-    .catch(() => showError('Упс.. Ошибочка вышла! Форма заполнена не верно'));
+    .catch(() => showError('Упс.. Ошибочка вышла!'));
 };
