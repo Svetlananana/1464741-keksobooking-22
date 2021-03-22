@@ -5,6 +5,13 @@ const ROOMS_COUNT = '100';
 const CAPACITY_COUNT = '0';
 const FILE_TYPES = ['gif', 'jpg', 'jpeg', 'png'];
 
+const TypesMinPriceMap = {
+  'bungalow': 0,
+  'flat': 1000,
+  'house': 5000,
+  'palace': 10000,
+};
+
 const adForm = document.querySelector('.ad-form');
 const typeSelectElement = adForm.querySelector('#type');
 const priceInputElement = adForm.querySelector('#price');
@@ -18,20 +25,12 @@ const resetBotton = adForm.querySelector('.ad-form__reset');
 
 const adFieldAvatar = adForm.querySelector('.ad-form__field input[type=file]');
 const adPreview = adForm.querySelector('.ad-form-header__preview img');
-
 const adUpload = adForm.querySelector('.ad-form__upload input[type=file]');
 const adPhoto = adForm.querySelector('.ad-form__photo');
 
-const defaultAvatarImg = adPreview.src;
+let defaultAvatarImg;
 
 const formElements = Array.from(adForm.children);
-
-const TypesMinPriceMap = {
-  'bungalow': 0,
-  'flat': 1000,
-  'house': 5000,
-  'palace': 10000,
-};
 
 export const setCapacityValue = () => {
   capacitySelectElement.value = roomNumberSelectElement.value;
@@ -171,8 +170,9 @@ const initializeReader = (element, fileTypes, onLoaded) => {
 
 export const initializeForm = () => {
   addressInputElement.readOnly = true;
-  addFormHandlers();
+  defaultAvatarImg = adPreview.src;
 
+  addFormHandlers();
   initializeReader(adFieldAvatar, FILE_TYPES, onAvatarChange);
   initializeReader(adUpload, FILE_TYPES, onPhotoChange);
 };

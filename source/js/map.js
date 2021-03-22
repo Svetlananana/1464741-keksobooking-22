@@ -1,4 +1,5 @@
-/* global L:readonly */
+import L from 'leaflet';
+import 'leaflet/dist/leaflet.css';
 
 import { setAdressValue } from './form.js';
 import { createCard } from './card.js';
@@ -12,9 +13,9 @@ let map;
 
 const mainPinIcon = L.icon(
   {
-    iconUrl: './leaflet/images/marker-icon-2x.png',
-    iconSize: [40, 60],
-    iconAnchor: [20, 60],
+    iconUrl: 'img/main-pin.svg',
+    iconSize: [46, 46],
+    iconAnchor: [23, 46],
   },
 );
 
@@ -37,9 +38,9 @@ export const renderMarkers = (offers) => {
 
   offers.forEach((offer) => {
     const icon = L.icon({
-      iconUrl: './leaflet/images/marker-icon.png',
-      iconSize: [26, 38],
-      iconAnchor: [13, 38],
+      iconUrl: 'img/pin.svg',
+      iconSize: [40, 40],
+      iconAnchor: [20, 40],
     });
 
     const marker = L.marker(

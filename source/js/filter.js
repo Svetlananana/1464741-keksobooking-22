@@ -1,28 +1,5 @@
 const MAX_CARDS_COUNT = 10;
-
-const filtersForm = document.querySelector('.map__filters');
-const filterestElements = Array.from(filtersForm.children);
-
-const filterType = filtersForm.querySelector('#housing-type');
-const filterPrice = filtersForm.querySelector('#housing-price');
-const filterRooms = filtersForm.querySelector('#housing-rooms');
-const filterGuests = filtersForm.querySelector('#housing-guests');
-const filterFeatures = filtersForm.querySelectorAll('.map__checkbox');
-
-
-export const disableFilter = () => {
-  filtersForm.classList.add('ad-form--disabled');
-  filterestElements.forEach((children) => {
-    children.disabled = true;
-  })
-};
-
-export const enableFilter = () => {
-  filtersForm.classList.remove('ad-form--disabled');
-  filterestElements.forEach((children) => {
-    children.disabled = false;
-  })
-};
+const ANY_VALUE = 'any';
 
 const PriceRange = {
   LOW: 10000,
@@ -30,14 +7,36 @@ const PriceRange = {
 };
 
 const PriceValue = {
-  ANY_VALUE: 'any',
   MIDDLE: 'middle',
   LOW: 'low',
   HIGH: 'high',
-}
+};
+
+const filtersForm = document.querySelector('.map__filters');
+const filtersElements = Array.from(filtersForm.children);
+
+const filterType = filtersForm.querySelector('#housing-type');
+const filterPrice = filtersForm.querySelector('#housing-price');
+const filterRooms = filtersForm.querySelector('#housing-rooms');
+const filterGuests = filtersForm.querySelector('#housing-guests');
+const filterFeatures = filtersForm.querySelectorAll('.map__checkbox');
+
+export const disableFilter = () => {
+  filtersForm.classList.add('ad-form--disabled');
+  filtersElements.forEach((children) => {
+    children.disabled = true;
+  })
+};
+
+export const enableFilter = () => {
+  filtersForm.classList.remove('ad-form--disabled');
+  filtersElements.forEach((children) => {
+    children.disabled = false;
+  })
+};
 
 const checkOfferType = (offer) => {
-  return filterType.value === PriceValue.ANY_VALUE || offer.offer.type === filterType.value;
+  return filterType.value === ANY_VALUE || offer.offer.type === filterType.value;
 };
 
 const checkOfferPrice = (offer) => {
@@ -58,11 +57,11 @@ const checkOfferPrice = (offer) => {
 };
 
 const checkOfferRooms = (offer) => {
-  return filterRooms.value === PriceValue.ANY_VALUE || offer.offer.rooms === +filterRooms.value;
+  return filterRooms.value === ANY_VALUE || offer.offer.rooms === +filterRooms.value;
 };
 
 const checkOfferGuests = (offer) => {
-  return filterGuests.value === PriceValue.ANY_VALUE || offer.offer.guests === +filterGuests.value;
+  return filterGuests.value === ANY_VALUE || offer.offer.guests === +filterGuests.value;
 };
 
 const getfilteringFeatures = () => {
@@ -121,11 +120,3 @@ export const addFilterHandler = (callback, offers) => {
   filtersForm.addEventListener('change', onFilterChange);
 };
 
-
-// let offers = [];
-// const getOffers = () => offers.slice(0);
-// const setOffers = (newOffers) => offers = newOffers;
-
-// И в других модулях const offers = getOffers();
-
-//
